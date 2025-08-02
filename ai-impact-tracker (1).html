@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Impact Tracker - Rocket to $1M</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #00c4cc 0%, #7b68ee 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .goal-display {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+            color: white;
+        }
+
+        .goal-amount {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #00d4aa;
+            margin-bottom: 10px;
+        }
+
+        .goal-progress {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .rocket-container {
+            position: relative;
+            height: 800px;
+            background: linear-gradient(to bottom, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, #eee, transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent);
+            background-repeat: repeat;
+            background-size: 200px 100px;
+            animation: twinkle 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .milestone {
+            position: absolute;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 10px 15px;
+            color: white;
+            font-weight: 600;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .milestone.reached {
+            background: rgba(0, 212, 170, 0.3);
+            border-color: #00d4aa;
+            box-shadow: 0 0 20px rgba(0, 212, 170, 0.5);
+        }
+
+        .moon {
+            position: absolute;
+            left: 50%;
+            top: 20%;
+            transform: translateX(-50%);
+            font-size: 4rem;
+            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
+            animation: moon-glow 3s ease-in-out infinite alternate;
+            z-index: 5;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .moon:hover {
+            animation: moon-glow 3s ease-in-out infinite alternate, moon-hover-glow 0.5s ease-in-out infinite alternate;
+            transform: translateX(-50%) scale(1.1);
+        }
+
+        @keyframes moon-glow {
+            0% { 
+                filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3)) drop-shadow(0 0 20px rgba(255, 255, 255, 0.4));
+            }
+            100% { 
+                filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3)) drop-shadow(0 0 40px rgba(255, 255, 255, 0.8));
+            }
+        }
+
+        @keyframes moon-hover-glow {
+            0% { 
+                filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3)) drop-shadow(0 0 40px rgba(255, 255, 255, 0.8)) drop-shadow(0 0 60px rgba(255, 215, 0, 0.6));
+            }
+            100% { 
+                filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3)) drop-shadow(0 0 60px rgba(255, 255, 255, 1)) drop-shadow(0 0 80px rgba(255, 215, 0, 0.9));
+            }
+        }
+
+        .rocket {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%) rotate(-45deg);
+            font-size: 4rem;
+            transition: bottom 1s ease-out;
+            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
+            animation: rocket-glow 2s ease-in-out infinite alternate;
+            cursor: pointer;
+        }
+
+        .rocket:hover {
+            animation: rocket-glow 2s ease-in-out infinite alternate, rocket-shake 0.1s ease-in-out infinite;
+        }
+
+        @keyframes rocket-glow {
+            0% { 
+                filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3)) drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+            }
+            100% { 
+                filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3)) drop-shadow(0 0 30px rgba(255, 255, 255, 0.6));
+            }
+        }
+
+        @keyframes rocket-shake {
+            0% { transform: translateX(-50%) rotate(-45deg) translate(0, 0); }
+            25% { transform: translateX(-50%) rotate(-45deg) translate(1px, -1px); }
+            50% { transform: translateX(-50%) rotate(-45deg) translate(-1px, 1px); }
+            75% { transform: translateX(-50%) rotate(-45deg) translate(1px, 1px); }
+            100% { transform: translateX(-50%) rotate(-45deg) translate(-1px, -1px); }
+        }
+
+        .rocket-trail {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            background: linear-gradient(to top, transparent, #00d4aa);
+            border-radius: 2px;
+            transition: height 1s ease-out;
+        }
+
+        .project-block {
+            position: absolute;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 15px;
+            width: 250px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #00d4aa;
+            z-index: 10;
+        }
+
+        .project-block:hover {
+            transform: translateX(10px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            z-index: 20;
+        }
+
+        .project-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .project-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #00d4aa;
+            margin-bottom: 5px;
+        }
+
+        .project-date {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-bottom: 10px;
+        }
+
+        .project-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .project-block:hover .project-details {
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .project-details::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .project-details::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 2px;
+        }
+
+        .project-details::-webkit-scrollbar-thumb {
+            background: #00d4aa;
+            border-radius: 2px;
+        }
+
+        .project-details::-webkit-scrollbar-thumb:hover {
+            background: #00c49a;
+        }
+
+        .project-summary {
+            font-size: 0.9rem;
+            color: #34495e;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .project-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .meta-tag {
+            background: #e8f4fd;
+            color: #2980b9;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .admin-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .admin-toggle {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .admin-toggle:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+
+        .admin-content {
+            display: none;
+        }
+
+        .admin-content.active {
+            display: block;
+        }
+
+        .password-form {
+            margin-bottom: 20px;
+        }
+
+        .password-input {
+            width: 300px;
+            padding: 12px;
+            border: 2px solid #e1e8ed;
+            border-radius: 10px;
+            font-size: 1rem;
+            margin-right: 10px;
+        }
+
+        .password-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            background: #00d4aa;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #00c49a;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6fd8;
+        }
+
+        .projects-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .projects-table th,
+        .projects-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e1e8ed;
+        }
+
+        .projects-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .projects-table tbody tr {
+            cursor: move;
+            transition: all 0.2s ease;
+        }
+
+        .projects-table tbody tr:hover {
+            background: #f8f9fa;
+            transform: scale(1.01);
+        }
+
+        .projects-table tbody tr.dragging {
+            opacity: 0.5;
+            transform: rotate(2deg);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .projects-table tbody tr.drag-over {
+            border-top: 3px solid #00d4aa;
+        }
+
+        .drag-handle {
+            cursor: grab;
+            color: #7f8c8d;
+            font-size: 1.2rem;
+            margin-right: 8px;
+        }
+
+        .drag-handle:active {
+            cursor: grabbing;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .add-project-form {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .add-project-form.active {
+            display: block;
+        }
+
+        .confetti {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #00d4aa;
+            animation: confetti-fall 3s linear infinite;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .achievement-badge {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(45deg, #feca57, #ff9ff3);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            z-index: 1001;
+            display: none;
+            animation: badge-bounce 0.6s ease-out;
+        }
+
+        @keyframes badge-bounce {
+            0% { transform: translate(-50%, -50%) scale(0); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        @keyframes slideIn {
+            0% { 
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            100% { 
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .goal-amount {
+                font-size: 2rem;
+            }
+            
+            .rocket-container {
+                height: 600px;
+            }
+            
+            .project-block {
+                width: 200px;
+                padding: 10px;
+            }
+            
+            .project-block:hover {
+                transform: translateX(5px) scale(1.02);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 AI Impact Tracker</h1>
+            <p>Propelling toward $1M in AI-driven savings</p>
+        </div>
+
+        <div class="goal-display">
+            <div class="goal-amount" id="totalValue">$0</div>
+            <div class="goal-progress" id="progressText">0% toward $1M goal</div>
+        </div>
+
+        <div class="rocket-container">
+            <div class="stars"></div>
+            
+            <!-- Milestones -->
+            <div class="milestone" style="top: 80%; right: 20px;" data-value="250000">$250K</div>
+            <div class="milestone" style="top: 60%; right: 20px;" data-value="500000">$500K</div>
+            <div class="milestone" style="top: 40%; right: 20px;" data-value="750000">$750K</div>
+            <div class="milestone" style="top: 20%; right: 20px;" data-value="1000000">$1M 🎯</div>
+            <div class="milestone" style="top: 5%; right: 20px;" data-value="1250000">Beyond! 🌟</div>
+
+            <!-- Moon at $1M target -->
+            <div class="moon" id="moon">🌔</div>
+
+            <!-- Rocket -->
+            <div class="rocket" id="rocket">🚀</div>
+
+            <!-- Rocket Trail -->
+            <div class="rocket-trail" id="rocketTrail"></div>
+
+            <!-- Project Blocks Container -->
+            <div id="projectBlocks"></div>
+        </div>
+
+        <div class="admin-section">
+            <div class="admin-header">
+                <h2>Admin Panel</h2>
+                <button class="admin-toggle" onclick="toggleAdmin()">Toggle Admin View</button>
+            </div>
+            
+            <div class="admin-content" id="adminContent">
+                <div class="password-form" id="passwordForm">
+                    <input type="password" class="password-input" id="passwordInput" placeholder="Enter admin password">
+                    <button class="btn btn-secondary" onclick="checkPassword()">Access Admin</button>
+                    <p style="margin-top: 10px; color: #7f8c8d; font-size: 0.9rem;">
+                        Demo password: "admin123" | Always accessible for seang@canva.com
+                    </p>
+                </div>
+                
+                <div id="adminPanel" style="display: none;">
+                    <div style="background: #e8f4fd; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+                        <p style="margin: 0; color: #2980b9; font-weight: 600;">💡 Data Storage: Browser localStorage</p>
+                        <p style="margin: 5px 0 0 0; color: #34495e; font-size: 0.9rem;">
+                            Your data is saved locally in this browser. Use Export/Import to share with team members or backup your data.
+                        </p>
+                    </div>
+                    
+                    <div style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
+                        <button class="btn" onclick="toggleAddForm()">+ Add New Project</button>
+                        <button class="btn btn-secondary" onclick="exportData()">📥 Export Data</button>
+                        <button class="btn btn-secondary" onclick="document.getElementById('importFile').click()">📤 Import Data</button>
+                        <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importData(event)">
+                        <button class="btn btn-secondary" onclick="resetToDefaults()" style="background: #e74c3c;" onmouseover="this.style.background='#c0392b'" onmouseout="this.style.background='#e74c3c'">🔄 Reset to Defaults</button>
+                    </div>
+                    
+                    <div class="add-project-form" id="addProjectForm">
+                        <h3>Add New Project</h3>
+                        <div class="form-group">
+                            <label>Project Name</label>
+                            <input type="text" id="newProjectName" placeholder="e.g., AE Call Prep">
+                        </div>
+                        <div class="form-group">
+                            <label>Value ($)</label>
+                            <input type="number" id="newProjectValue" placeholder="75000">
+                        </div>
+                        <div class="form-group">
+                            <label>Live Date</label>
+                            <input type="date" id="newProjectDate">
+                        </div>
+                        <div class="form-group">
+                            <label>Project Summary</label>
+                            <textarea id="newProjectSummary" rows="3" placeholder="Brief description of the project impact..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Driver</label>
+                            <input type="text" id="newProjectDriver" placeholder="Team or person responsible">
+                        </div>
+                        <div class="form-group">
+                            <label>Supergroup Name</label>
+                            <input type="text" id="newProjectSupergroup" placeholder="Department or division">
+                        </div>
+                        <div class="form-group">
+                            <label>Platforms</label>
+                            <input type="text" id="newProjectPlatforms" placeholder="Canva, Jira, etc. (comma-separated)">
+                        </div>
+                        <div class="form-group">
+                            <label>Project Overview Link (optional)</label>
+                            <input type="url" id="newProjectLink" placeholder="https://example.com/project-overview">
+                        </div>
+                        <button class="btn" onclick="addProject()">Add Project</button>
+                        <button class="btn btn-secondary" onclick="toggleAddForm()">Cancel</button>
+                    </div>
+                    
+                    <table class="projects-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 40px;"></th>
+                                <th>Project Name</th>
+                                <th>Value</th>
+                                <th>Live Date</th>
+                                <th>Driver</th>
+                                <th>Link</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="projectsTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confetti Container -->
+    <div class="confetti" id="confetti"></div>
+    
+    <!-- Achievement Badge -->
+    <div class="achievement-badge" id="achievementBadge">
+        🎉 $1M GOAL ACHIEVED! 🎉<br>
+        <span style="font-size: 1rem;">Beyond Impact Unlocked!</span>
+    </div>
+
+    <script>
+        // Default project data
+        const defaultProjects = [
+            {
+                id: 1,
+                name: "AE Call Prep",
+                value: 75000,
+                liveDate: "2025-06-30",
+                summary: "Automated preparation system for Account Executive calls, reducing prep time by 80%",
+                driver: "Sales Engineering Team",
+                supergroup: "Revenue Operations",
+                platforms: ["Canva", "Salesforce", "Slack"],
+                link: "https://canva.com/ae-call-prep"
+            },
+            {
+                id: 2,
+                name: "Content Moderation AI",
+                value: 150000,
+                liveDate: "2025-04-15",
+                summary: "ML-powered content moderation reducing manual review workload by 65%",
+                driver: "Trust & Safety Team",
+                supergroup: "Product Safety",
+                platforms: ["Canva", "TensorFlow", "AWS"],
+                link: "https://canva.com/content-moderation"
+            },
+            {
+                id: 3,
+                name: "Design Suggestion Engine",
+                value: 200000,
+                liveDate: "2025-08-20",
+                summary: "AI-powered design recommendations increasing user engagement by 40%",
+                driver: "ML Research Team",
+                supergroup: "Product Innovation",
+                platforms: ["Canva", "PyTorch", "Redis"],
+                link: "https://canva.com/design-suggestions"
+            }
+        ];
+
+        // Load projects from localStorage or use defaults
+        let projects = loadProjects();
+        let isAdminAuthenticated = false;
+        let goalReached = false;
+
+        // Data persistence functions
+        function saveProjects() {
+            try {
+                localStorage.setItem('aiImpactTrackerProjects', JSON.stringify(projects));
+                console.log('Projects saved to localStorage');
+            } catch (error) {
+                console.warn('Could not save to localStorage:', error);
+            }
+        }
+
+        function loadProjects() {
+            try {
+                const saved = localStorage.getItem('aiImpactTrackerProjects');
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    console.log('Projects loaded from localStorage');
+                    return parsed;
+                }
+            } catch (error) {
+                console.warn('Could not load from localStorage:', error);
+            }
+            console.log('Using default projects');
+            return [...defaultProjects];
+        }
+
+        function resetToDefaults() {
+            projects = [...defaultProjects];
+            saveProjects();
+            renderProjectsTable();
+            renderProjectBlocks();
+            updateRocketPosition();
+        }
+
+        function exportData() {
+            const dataToExport = {
+                version: "1.0",
+                exportDate: new Date().toISOString(),
+                projects: projects
+            };
+            
+            const dataStr = JSON.stringify(dataToExport, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(dataBlob);
+            link.download = `ai-impact-tracker-${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+            
+            // Show success message
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #00d4aa;
+                color: white;
+                padding: 15px 25px;
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+                z-index: 1002;
+                animation: slideIn 0.3s ease-out;
+            `;
+            modal.innerHTML = '✅ Data exported successfully!';
+            document.body.appendChild(modal);
+            
+            setTimeout(() => {
+                document.body.removeChild(modal);
+            }, 3000);
+        }
+
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importedData = JSON.parse(e.target.result);
+                    
+                    if (importedData.projects && Array.isArray(importedData.projects)) {
+                        // Validate the data structure
+                        const isValid = importedData.projects.every(p => 
+                            p.name && p.value && p.liveDate && p.summary && 
+                            p.driver && p.supergroup && p.platforms
+                        );
+                        
+                        if (!isValid) {
+                            throw new Error('Invalid project data structure');
+                        }
+                        
+                        // Import successful
+                        projects = importedData.projects;
+                        saveProjects();
+                        renderProjectsTable();
+                        renderProjectBlocks();
+                        updateRocketPosition();
+                        
+                        // Show success message
+                        const modal = document.createElement('div');
+                        modal.style.cssText = `
+                            position: fixed;
+                            top: 20px;
+                            right: 20px;
+                            background: #00d4aa;
+                            color: white;
+                            padding: 15px 25px;
+                            border-radius: 10px;
+                            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+                            z-index: 1002;
+                            animation: slideIn 0.3s ease-out;
+                        `;
+                        modal.innerHTML = `✅ Imported ${projects.length} projects successfully!`;
+                        document.body.appendChild(modal);
+                        
+                        setTimeout(() => {
+                            document.body.removeChild(modal);
+                        }, 3000);
+                    } else {
+                        throw new Error('No valid projects found in file');
+                    }
+                } catch (error) {
+                    alert('Error importing data: ' + error.message);
+                }
+            };
+            
+            reader.readAsText(file);
+            
+            // Clear the input value so the same file can be imported again
+            event.target.value = '';
+        }
+
+        function updateRocketPosition() {
+            const totalValue = projects.reduce((sum, project) => sum + project.value, 0);
+            const goalValue = 1000000;
+            const maxHeight = 720; // Container height minus rocket height
+            
+            // Calculate progress (can exceed 100%)
+            const progress = Math.min(totalValue / goalValue, 2); // Cap at 200% for visual purposes
+            const rocketBottom = 20 + (progress * (maxHeight - 100));
+            
+            const rocket = document.getElementById('rocket');
+            const trail = document.getElementById('rocketTrail');
+            
+            rocket.style.bottom = rocketBottom + 'px';
+            trail.style.height = rocketBottom + 'px';
+            trail.style.bottom = '20px';
+            
+            // Update goal display
+            document.getElementById('totalValue').textContent = '$' + totalValue.toLocaleString();
+            const progressPercent = Math.round((totalValue / goalValue) * 100);
+            document.getElementById('progressText').textContent = progressPercent + '% toward $1M goal';
+            
+            // Update milestones
+            document.querySelectorAll('.milestone').forEach(milestone => {
+                const milestoneValue = parseInt(milestone.dataset.value);
+                if (totalValue >= milestoneValue) {
+                    milestone.classList.add('reached');
+                } else {
+                    milestone.classList.remove('reached');
+                }
+            });
+            
+            // Check for goal achievement
+            if (totalValue >= goalValue && !goalReached) {
+                goalReached = true;
+                showAchievement();
+            } else if (totalValue < goalValue) {
+                goalReached = false;
+            }
+        }
+
+        function renderProjectBlocks() {
+            const container = document.getElementById('projectBlocks');
+            container.innerHTML = '';
+            
+            let cumulativeValue = 0;
+            const maxHeight = 720;
+            const goalValue = 1000000;
+            
+            projects.forEach((project, index) => {
+                cumulativeValue += project.value;
+                const progress = Math.min(cumulativeValue / goalValue, 2);
+                const blockBottom = 20 + (progress * (maxHeight - 100)) - 40;
+                
+                const block = document.createElement('div');
+                block.className = 'project-block';
+                block.style.bottom = blockBottom + 'px';
+                block.style.animationDelay = (index * 0.2) + 's';
+                
+                const platforms = Array.isArray(project.platforms) ? project.platforms : project.platforms.split(',').map(p => p.trim());
+                
+                block.innerHTML = `
+                    <div class="project-name">${project.name}</div>
+                    <div class="project-value">$${project.value.toLocaleString()}</div>
+                    <div class="project-date">Live: ${new Date(project.liveDate).toLocaleDateString()}</div>
+                    <div class="project-details">
+                        <div class="project-summary">${project.summary}</div>
+                        <div class="project-meta">
+                            <span class="meta-tag">👤 ${project.driver}</span>
+                            <span class="meta-tag">🏢 ${project.supergroup}</span>
+                            ${platforms.map(platform => `<span class="meta-tag">🔧 ${platform}</span>`).join('')}
+                        </div>
+                        ${project.link ? `<div style="margin-top: 12px;"><a href="${project.link}" target="_blank" class="btn" style="display: inline-block; text-decoration: none; padding: 8px 16px; font-size: 0.85rem;">🔗 Project Overview</a></div>` : ''}
+                    </div>
+                `;
+                
+                container.appendChild(block);
+            });
+        }
+
+        function showAchievement() {
+            // Show confetti
+            createConfetti();
+            
+            // Show achievement badge
+            const badge = document.getElementById('achievementBadge');
+            badge.style.display = 'block';
+            
+            setTimeout(() => {
+                badge.style.display = 'none';
+            }, 4000);
+        }
+
+        function createConfetti() {
+            const confettiContainer = document.getElementById('confetti');
+            const colors = ['#00d4aa', '#667eea', '#feca57', '#ff6b6b', '#48dbfb'];
+            
+            for (let i = 0; i < 50; i++) {
+                const confettiPiece = document.createElement('div');
+                confettiPiece.className = 'confetti-piece';
+                confettiPiece.style.left = Math.random() * 100 + '%';
+                confettiPiece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confettiPiece.style.animationDelay = Math.random() * 3 + 's';
+                confettiContainer.appendChild(confettiPiece);
+            }
+            
+            setTimeout(() => {
+                confettiContainer.innerHTML = '';
+            }, 6000);
+        }
+
+        function toggleAdmin() {
+            const adminContent = document.getElementById('adminContent');
+            adminContent.classList.toggle('active');
+        }
+
+        function checkPassword() {
+            const password = document.getElementById('passwordInput').value;
+            const email = prompt("Please enter your email address:");
+            
+            if (password === 'admin123' || email === 'seang@canva.com') {
+                isAdminAuthenticated = true;
+                document.getElementById('passwordForm').style.display = 'none';
+                document.getElementById('adminPanel').style.display = 'block';
+                renderProjectsTable();
+            } else {
+                alert('Invalid credentials. Please try again.');
+            }
+        }
+
+        function renderProjectsTable() {
+            const tbody = document.getElementById('projectsTableBody');
+            tbody.innerHTML = '';
+            
+            projects.forEach((project, index) => {
+                const row = document.createElement('tr');
+                row.draggable = true;
+                row.dataset.projectId = project.id;
+                row.dataset.index = index;
+                
+                row.innerHTML = `
+                    <td><span class="drag-handle">⋮⋮</span></td>
+                    <td>${project.name}</td>
+                    <td>$${project.value.toLocaleString()}</td>
+                    <td>${new Date(project.liveDate).toLocaleDateString()}</td>
+                    <td>${project.driver}</td>
+                    <td>${project.link ? `<a href="${project.link}" target="_blank" class="btn" style="padding: 5px 10px; font-size: 0.8rem; text-decoration: none; display: inline-block;">🔗 Project Overview</a>` : '<span style="color: #7f8c8d; font-size: 0.8rem;">No link</span>'}</td>
+                    <td>
+                        <button class="btn" style="padding: 5px 10px; font-size: 0.8rem;" onclick="editProject(${project.id})">Edit</button>
+                        <button class="btn" style="padding: 5px 10px; font-size: 0.8rem; background: #e74c3c;" onclick="deleteProject(${project.id})">Delete</button>
+                    </td>
+                `;
+                
+                // Add drag event listeners
+                row.addEventListener('dragstart', handleDragStart);
+                row.addEventListener('dragover', handleDragOver);
+                row.addEventListener('drop', handleDrop);
+                row.addEventListener('dragend', handleDragEnd);
+                row.addEventListener('dragenter', handleDragEnter);
+                row.addEventListener('dragleave', handleDragLeave);
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        function toggleAddForm() {
+            const form = document.getElementById('addProjectForm');
+            form.classList.toggle('active');
+        }
+
+        function addProject() {
+            const name = document.getElementById('newProjectName').value;
+            const value = parseInt(document.getElementById('newProjectValue').value);
+            const liveDate = document.getElementById('newProjectDate').value;
+            const summary = document.getElementById('newProjectSummary').value;
+            const driver = document.getElementById('newProjectDriver').value;
+            const supergroup = document.getElementById('newProjectSupergroup').value;
+            const platforms = document.getElementById('newProjectPlatforms').value;
+            const link = document.getElementById('newProjectLink').value;
+            
+            if (!name || !value || !liveDate || !summary || !driver || !supergroup || !platforms) {
+                alert('Please fill in all fields.');
+                return;
+            }
+            
+            const newProject = {
+                id: Date.now(),
+                name,
+                value,
+                liveDate,
+                summary,
+                driver,
+                supergroup,
+                platforms: platforms.split(',').map(p => p.trim()),
+                link: link || null
+            };
+            
+            projects.push(newProject);
+            saveProjects(); // Save to localStorage
+            
+            // Clear form
+            document.getElementById('newProjectName').value = '';
+            document.getElementById('newProjectValue').value = '';
+            document.getElementById('newProjectDate').value = '';
+            document.getElementById('newProjectSummary').value = '';
+            document.getElementById('newProjectDriver').value = '';
+            document.getElementById('newProjectSupergroup').value = '';
+            document.getElementById('newProjectPlatforms').value = '';
+            document.getElementById('newProjectLink').value = '';
+            
+            toggleAddForm();
+            renderProjectsTable();
+            renderProjectBlocks();
+            updateRocketPosition();
+        }
+
+        function editProject(id) {
+            const project = projects.find(p => p.id === id);
+            if (!project) return;
+            
+            // Create a modal-style edit form
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 1000;
+            `;
+            
+            const form = document.createElement('div');
+            form.style.cssText = `
+                background: white;
+                padding: 30px;
+                border-radius: 15px;
+                width: 500px;
+                max-width: 90vw;
+                max-height: 80vh;
+                overflow-y: auto;
+            `;
+            
+            const platforms = Array.isArray(project.platforms) ? project.platforms.join(', ') : project.platforms;
+            
+            form.innerHTML = `
+                <h3 style="margin-bottom: 20px; color: #2c3e50;">Edit Project</h3>
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #2c3e50;">Project Name</label>
+                    <input type="text" id="editName" value="${project.name}" style="width: 100%; padding: 10px; border: 2px solid #e1e8ed; border-radius: 8px;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #2c3e50;">Value ($)</label>
+                    <input type="number" id="editValue" value="${project.value}" style="width: 100%; padding: 10px; border: 2px solid #e1e8ed; border-radius: 8px;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #2c3e50;">Live Date</label>
+                    <input type="date" id="editDate" value="${project.liveDate}" style="width: 100%; padding: 10px; border: 2px solid #e1e8ed; border-radius: 8px;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #2c3e50;">Summary</label>
+                    <textarea id="editSummary" rows="3" style="width: 100%; padding: 10px; border: 2px solid #e1e8ed; border-radius: 8px;">${project.summary}</textarea>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #2c3e50;">Driver</label>
+                    <input type="text" id="editDriver" value="${project.driver}" style="width: 100%; padding: 10px; border: 2px solid #e1e8ed; border-radius: 8px;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #2c3e50;">Supergroup</label>
+                    <input type="text" id="editSupergroup" value="${project.supergroup}" style="width: 100%; padding: 10px; border: 2px solid #e1e8ed; border-radius: 8px;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #2c3e50;">Platforms (comma-separated)</label>
+                    <input type="text" id="editPlatforms" value="${platforms}" style="width: 100%; padding: 10px; border: 2px solid #e1e8ed; border-radius: 8px;">
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #2c3e50;">Project Overview Link (optional)</label>
+                    <input type="url" id="editLink" value="${project.link || ''}" style="width: 100%; padding: 10px; border: 2px solid #e1e8ed; border-radius: 8px;">
+                </div>
+                <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                    <button id="saveEdit" style="background: #00d4aa; color: white; border: none; padding: 12px 24px; border-radius: 10px; cursor: pointer; font-weight: 600;">Save Changes</button>
+                    <button id="cancelEdit" style="background: #667eea; color: white; border: none; padding: 12px 24px; border-radius: 10px; cursor: pointer; font-weight: 600;">Cancel</button>
+                </div>
+            `;
+            
+            modal.appendChild(form);
+            document.body.appendChild(modal);
+            
+            // Handle save
+            document.getElementById('saveEdit').onclick = function() {
+                const newName = document.getElementById('editName').value;
+                const newValue = parseInt(document.getElementById('editValue').value);
+                const newDate = document.getElementById('editDate').value;
+                const newSummary = document.getElementById('editSummary').value;
+                const newDriver = document.getElementById('editDriver').value;
+                const newSupergroup = document.getElementById('editSupergroup').value;
+                const newPlatforms = document.getElementById('editPlatforms').value;
+                const newLink = document.getElementById('editLink').value;
+                
+                if (!newName || !newValue || !newDate || !newSummary || !newDriver || !newSupergroup || !newPlatforms) {
+                    alert('Please fill in all fields.');
+                    return;
+                }
+                
+                project.name = newName;
+                project.value = newValue;
+                project.liveDate = newDate;
+                project.summary = newSummary;
+                project.driver = newDriver;
+                project.supergroup = newSupergroup;
+                project.platforms = newPlatforms.split(',').map(p => p.trim());
+                project.link = newLink || null;
+                
+                saveProjects(); // Save to localStorage
+                renderProjectsTable();
+                renderProjectBlocks();
+                updateRocketPosition();
+                document.body.removeChild(modal);
+            };
+            
+            // Handle cancel
+            document.getElementById('cancelEdit').onclick = function() {
+                document.body.removeChild(modal);
+            };
+            
+            // Handle click outside modal
+            modal.onclick = function(e) {
+                if (e.target === modal) {
+                    document.body.removeChild(modal);
+                }
+            };
+        }
+
+        function deleteProject(id) {
+            const project = projects.find(p => p.id === id);
+            if (!project) return;
+            
+            // Create a custom confirmation modal
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 1000;
+            `;
+            
+            const confirmBox = document.createElement('div');
+            confirmBox.style.cssText = `
+                background: white;
+                padding: 30px;
+                border-radius: 15px;
+                width: 400px;
+                max-width: 90vw;
+                text-align: center;
+            `;
+            
+            confirmBox.innerHTML = `
+                <h3 style="margin-bottom: 15px; color: #e74c3c;">Delete Project</h3>
+                <p style="margin-bottom: 10px; color: #2c3e50;">Are you sure you want to delete:</p>
+                <p style="margin-bottom: 20px; font-weight: 600; color: #2c3e50;">"${project.name}" ($${project.value.toLocaleString()})</p>
+                <p style="margin-bottom: 25px; color: #7f8c8d; font-size: 0.9rem;">This action cannot be undone and will update the rocket position.</p>
+                <div style="display: flex; gap: 10px; justify-content: center;">
+                    <button id="confirmDelete" style="background: #e74c3c; color: white; border: none; padding: 12px 24px; border-radius: 10px; cursor: pointer; font-weight: 600;">Delete Project</button>
+                    <button id="cancelDelete" style="background: #667eea; color: white; border: none; padding: 12px 24px; border-radius: 10px; cursor: pointer; font-weight: 600;">Cancel</button>
+                </div>
+            `;
+            
+            modal.appendChild(confirmBox);
+            document.body.appendChild(modal);
+            
+            // Handle confirm delete
+            document.getElementById('confirmDelete').onclick = function() {
+                projects = projects.filter(p => p.id !== id);
+                saveProjects(); // Save to localStorage
+                renderProjectsTable();
+                renderProjectBlocks();
+                updateRocketPosition();
+                document.body.removeChild(modal);
+            };
+            
+            // Handle cancel
+            document.getElementById('cancelDelete').onclick = function() {
+                document.body.removeChild(modal);
+            };
+            
+            // Handle click outside modal
+            modal.onclick = function(e) {
+                if (e.target === modal) {
+                    document.body.removeChild(modal);
+                }
+            };
+        }
+
+        // Drag and drop functionality
+        let draggedElement = null;
+        let draggedIndex = null;
+
+        function handleDragStart(e) {
+            draggedElement = this;
+            draggedIndex = parseInt(this.dataset.index);
+            this.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/html', this.outerHTML);
+        }
+
+        function handleDragOver(e) {
+            if (e.preventDefault) {
+                e.preventDefault();
+            }
+            e.dataTransfer.dropEffect = 'move';
+            return false;
+        }
+
+        function handleDragEnter(e) {
+            if (this !== draggedElement) {
+                this.classList.add('drag-over');
+            }
+        }
+
+        function handleDragLeave(e) {
+            this.classList.remove('drag-over');
+        }
+
+        function handleDrop(e) {
+            if (e.stopPropagation) {
+                e.stopPropagation();
+            }
+
+            if (draggedElement !== this) {
+                const dropIndex = parseInt(this.dataset.index);
+                
+                // Reorder the projects array
+                const draggedProject = projects[draggedIndex];
+                projects.splice(draggedIndex, 1);
+                projects.splice(dropIndex, 0, draggedProject);
+                
+                // Save the new order and re-render everything
+                saveProjects();
+                renderProjectsTable();
+                renderProjectBlocks();
+                updateRocketPosition();
+            }
+
+            return false;
+        }
+
+        function handleDragEnd(e) {
+            // Clean up
+            document.querySelectorAll('.projects-table tbody tr').forEach(row => {
+                row.classList.remove('dragging', 'drag-over');
+            });
+            draggedElement = null;
+            draggedIndex = null;
+        }
+
+        // Initialize the tracker
+        renderProjectBlocks();
+        updateRocketPosition();
+    </script>
+</body>
+</html>
